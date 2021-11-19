@@ -5,7 +5,6 @@
   const PADDLE_WIDTH = 100;
   const PADDLE_THINCKNESS = 10;
 
-
   //mouse values
   let mouseX = 0;
   let mouseY = 0;
@@ -39,7 +38,7 @@
     }
   
     if (ballY > canvas.height - ballRadius) {
-      ballSpeedY *= -1;
+      resetBall();
     }
   
     if (ballY < 0 + ballRadius) {
@@ -112,5 +111,10 @@
 
     console.log('mouseX', mouseX);
     console.log('mouseY', mouseY);
+  }
+
+  function resetBall() {
+    ballY = canvas.height / 2;
+    ballX = canvas.width / 2;
   }
 })();
