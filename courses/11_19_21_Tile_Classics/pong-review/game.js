@@ -3,7 +3,8 @@
   const ctx = canvas.getContext('2d');
   const fps = 30;
   const PADDLE_WIDTH = 100;
-  const PADDLE_THINCKNESS = 10;
+  const PADDLE_THICKNESS = 10;
+  const PADDLE_GAP_BOTTOM = 50;
 
   //mouse values
   let mouseX = 0;
@@ -28,20 +29,22 @@
   function moveAll() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
-  
-    if (ballX > canvas.width - ballRadius) {
-      ballSpeedX *= -1;
-    }
-  
-    if (ballX < 0 + ballRadius) {
-      ballSpeedX *= -1;
-    }
-  
-    if (ballY > canvas.height - ballRadius) {
-      resetBall();
-    }
-  
-    if (ballY < 0 + ballRadius) {
+
+
+    //contain ball on canvas
+    if (ballX > canvas.width - ballRadius)  ballSpeedX *= -1;
+    if (ballX < 0 + ballRadius)             ballSpeedX *= -1;
+    if (ballY > canvas.height - ballRadius) resetBall();
+    if (ballY < 0 + ballRadius)             ballSpeedY *= -1;
+
+
+    //handle ball hitting paddle
+    const paddleLeft = mouseX - (PADDLE_WIDTH / 2);
+    const paddleRight = mouseX + (PADDLE_WIDTH / 2);
+    const paddleTop = canvas.height - PADDLE_THICKNESS - PADDLE_GAP_BOTTOM;
+    const paddleBottom = canvas.height + PADDLE_THICKNESS - PADDLE_GAP_BOTTOM;
+    if (ballX > paddleLeft && ballX < paddleRight && ballY > paddleTop && ballY < paddleBottom) {
+      console.log("ping");
       ballSpeedY *= -1;
     }
   }
@@ -60,9 +63,9 @@
     //draw paddle
     drawRect({
       topLeftX: mouseX - (PADDLE_WIDTH / 2),
-      topLeftY: canvas.height - PADDLE_THINCKNESS,
+      topLeftY: canvas.height - PADDLE_THICKNESS - PADDLE_GAP_BOTTOM,
       boxWidth: PADDLE_WIDTH,
-      boxHeight: PADDLE_THINCKNESS,
+      boxHeight: PADDLE_THICKNESS,
       fillColor: "white"
     })
 
