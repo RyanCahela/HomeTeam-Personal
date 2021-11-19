@@ -43,9 +43,18 @@
     const paddleRight = mouseX + (PADDLE_WIDTH / 2);
     const paddleTop = canvas.height - PADDLE_THICKNESS - PADDLE_GAP_BOTTOM;
     const paddleBottom = canvas.height + PADDLE_THICKNESS - PADDLE_GAP_BOTTOM;
-    if (ballX > paddleLeft && ballX < paddleRight && ballY > paddleTop && ballY < paddleBottom) {
+    if (
+      ballX + ballRadius > paddleLeft && //ball is inside left edge of paddle
+      ballX - ballRadius < paddleRight && //ball is inside right edge of paddle
+      ballY + ballRadius > paddleTop && //ball is below top edge of paddle
+      ballY - ballRadius < paddleBottom //ball is above bottom edge of paddle (not sure if necessary)
+    ) {
       console.log("ping");
       ballSpeedY *= -1;
+
+      const centerOfPaddleX = mouseX - (PADDLE_WIDTH / 2);
+      const ballDistanceFromPaddleCenterX = ballX - centerOfPaddleX;
+      ballSpeedX = ballDistanceFromPaddleCenterX * 0.35;
     }
   }
 
@@ -117,6 +126,8 @@
   }
 
   function resetBall() {
+    ballSpeedX = 5;
+    ballSpeedY = 7;
     ballY = canvas.height / 2;
     ballX = canvas.width / 2;
   }
