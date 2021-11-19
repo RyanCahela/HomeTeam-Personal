@@ -2,7 +2,7 @@
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext('2d');
   const fps = 30;
-  const PADDLE_WIDTH = 1000;
+  const PADDLE_WIDTH = 100;
   const PADDLE_THINCKNESS = 10;
 
 
@@ -48,6 +48,8 @@
   }
 
   function drawAll() {
+
+    //draw background
     drawRect({
       topLeftX: 0,
       topLeftY: 0,
@@ -56,6 +58,16 @@
       fillColor: "black",
     });
 
+    //draw paddle
+    drawRect({
+      topLeftX: mouseX - (PADDLE_WIDTH / 2),
+      topLeftY: canvas.height - PADDLE_THINCKNESS,
+      boxWidth: PADDLE_WIDTH,
+      boxHeight: PADDLE_THINCKNESS,
+      fillColor: "white"
+    })
+
+    //draw ball
     drawCircle({
       centerX: ballX,
       centerY: ballY,
@@ -96,7 +108,7 @@
 
 
     mouseX = evt.clientX - rect.left - root.scrollLeft;
-    mouseY = evt.clientY - rect.top - root.scrollRight;
+    mouseY = evt.clientY - rect.top - root.scrollTop;
 
     console.log('mouseX', mouseX);
     console.log('mouseY', mouseY);
