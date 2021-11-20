@@ -8,7 +8,7 @@
 
   const BRICK_H = 50;
   const BRICK_W = 100;
-  const BRICK_COUNT = 4;
+  const BRICK_COUNT = 8;
   let brickGrid = [ true, false, true, true];
 
   //mouse values
@@ -23,6 +23,7 @@
   const ballRadius = 10;
 
   setInterval(updateAll, 1000/fps);
+  brickReset();
 
   canvas.addEventListener("mousemove", updateMousePosition);
 
@@ -107,7 +108,7 @@
   HELPER FUNCTIONS 
   ***********************/
   function drawBricks() {
-    for (let i = 0; i < brickGrid.length; i++) {
+    for (let i = 0; i < BRICK_COUNT; i++) {
       if(brickGrid[i]) {
         drawRect({
           boxWidth: BRICK_W - 2,
@@ -120,6 +121,16 @@
       }
     }
   }
+
+  function brickReset() {
+    for(let i = 0; i < BRICK_COUNT; i++) {
+      if(Math.random() > 0.5) {
+        brickGrid[i] = true;
+      } else {
+        brickGrid[i] = false;
+      } //end of rand brick generation
+    } //end of brick reset loop
+  } //end of brick reset
 
   function drawRect({
     topLeftX,
