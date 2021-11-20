@@ -85,6 +85,13 @@
       radius: ballRadius,
       fillColor: "white"
     })
+
+    drawText({
+      showWords: `X: ${mouseX}, Y: ${mouseY.toFixed(0)}`,
+      fillColor: "yellow",
+      textX: mouseX,
+      textY: mouseY,
+    })
   }
 
   /**********************
@@ -113,13 +120,23 @@
     ctx.fill();
   }
 
+  function drawText({
+    showWords,
+    textX,
+    textY,
+    fillColor
+  }) {
+    ctx.fillStyle = fillColor;
+    ctx.fillText(showWords, textX, textY);
+  }
+
   function updateMousePosition(evt) {
     const rect = canvas.getBoundingClientRect();
     const root = document.documentElement;
 
 
     mouseX = evt.clientX - rect.left - root.scrollLeft;
-    mouseY = evt.clientY - rect.top - root.scrollTop;
+    mouseY = evt.clientY - rect.top;
 
     console.log('mouseX', mouseX);
     console.log('mouseY', mouseY);
