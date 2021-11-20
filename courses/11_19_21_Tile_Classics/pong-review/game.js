@@ -6,6 +6,11 @@
   const PADDLE_THICKNESS = 10;
   const PADDLE_GAP_BOTTOM = 50;
 
+  const BRICK_H = 50;
+  const BRICK_W = 100;
+  const BRICK_COUNT = 4;
+  let brickGrid = [ true, false, true, true];
+
   //mouse values
   let mouseX = 0;
   let mouseY = 0;
@@ -86,17 +91,36 @@
       fillColor: "white"
     })
 
+    //draw debug mouse position
     drawText({
       showWords: `X: ${mouseX}, Y: ${mouseY.toFixed(0)}`,
       fillColor: "yellow",
       textX: mouseX,
       textY: mouseY,
     })
+
+    //draw bricks
+    drawBricks({});
   }
 
   /**********************
   HELPER FUNCTIONS 
   ***********************/
+  function drawBricks() {
+    for (let i = 0; i < brickGrid.length; i++) {
+      if(brickGrid[i]) {
+        drawRect({
+          boxWidth: BRICK_W - 2,
+          boxHeight: BRICK_H,
+          topLeftX: BRICK_W * i,
+          topLeftY: 0,
+          fillColor: "mediumseagreen"
+        })
+
+      }
+    }
+  }
+
   function drawRect({
     topLeftX,
     topLeftY,
@@ -133,7 +157,6 @@
   function updateMousePosition(evt) {
     const rect = canvas.getBoundingClientRect();
     const root = document.documentElement;
-
 
     mouseX = evt.clientX - rect.left - root.scrollLeft;
     mouseY = evt.clientY - rect.top;
